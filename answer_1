@@ -1,0 +1,92 @@
+    Задание 7
+
+>> volatility -f '/root/Downloads/Infosec-career/20190227.mem' imageinfo
+
+INFO    : volatility.debug    : Determining profile based on KDBG search...
+          Suggested Profile(s) : WinXPSP2x86, WinXPSP3x86 (Instantiated with WinXPSP2x86)
+                     AS Layer1 : IA32PagedMemoryPae (Kernel AS)
+                     AS Layer2 : FileAddressSpace (/root/Downloads/Infosec-career/20190227.mem)
+                      PAE type : PAE
+                           DTB : 0x334000L
+                          KDBG : 0x8054c2e0L
+          Number of Processors : 1
+     Image Type (Service Pack) : 2
+                KPCR for CPU 0 : 0xffdff000L
+             KUSER_SHARED_DATA : 0xffdf0000L
+           Image date and time : 2019-02-27 13:33:47 UTC+0000
+     Image local date and time : 2019-02-27 16:33:47 +0300
+
+>> volatility -f '/root/Downloads/Infosec-career/20190227.mem' --profile=WinXPSP2x86 pslist (запущенные процессы)
+
+Offset(V)  Name                    PID   PPID   Thds     Hnds   Sess  Wow64 Start                          Exit                          
+---------- -------------------- ------ ------ ------ -------- ------ ------ ------------------------------ ------------------------------
+0x823c6830 System                    4      0     56      248 ------      0                                                              
+0x82221020 smss.exe                528      4      3       21 ------      0 2019-02-27 13:30:16 UTC+0000                                 
+0x81fe64b0 csrss.exe               596    528     10      394      0      0 2019-02-27 13:30:20 UTC+0000                                 
+0x8217fc08 winlogon.exe            620    528     22      449      0      0 2019-02-27 13:30:21 UTC+0000                                 
+0x821be360 services.exe            720    620     15      271      0      0 2019-02-27 13:30:21 UTC+0000                                 
+0x82231488 lsass.exe               732    620     21      337      0      0 2019-02-27 13:30:22 UTC+0000                                 
+0x8230c550 vmacthlp.exe            900    720      1       24      0      0 2019-02-27 13:30:22 UTC+0000                                 
+0x82307410 svchost.exe             912    720     20      199      0      0 2019-02-27 13:30:23 UTC+0000                                 
+0x8220d4b0 svchost.exe             964    720      9      260      0      0 2019-02-27 13:30:23 UTC+0000                                 
+0x82248da0 svchost.exe            1136    720     63     1121      0      0 2019-02-27 13:30:23 UTC+0000                                 
+0x8219b158 svchost.exe            1220    720      5       65      0      0 2019-02-27 13:30:25 UTC+0000                                 
+0x81e2c2c0 svchost.exe            1388    720     13      196      0      0 2019-02-27 13:30:26 UTC+0000                                 
+0x821f4da0 spoolsv.exe            1560    720     15      142      0      0 2019-02-27 13:30:26 UTC+0000                                 
+0x821e4da0 explorer.exe           1760   1692     15      431      0      0 2019-02-27 13:30:27 UTC+0000                                 
+0x821c1558 vmtoolsd.exe           1872   1760      6      200      0      0 2019-02-27 13:30:29 UTC+0000                                 
+0x821e57b8 rundll32.exe           1880   1760      4       68      0      0 2019-02-27 13:30:29 UTC+0000                                 
+0x81eac8b8 ctfmon.exe             1888   1760      1       66      0      0 2019-02-27 13:30:29 UTC+0000                                 
+0x81fa9b88 svchost.exe            1996    720      5       86      0      0 2019-02-27 13:30:43 UTC+0000                                 
+0x821802e8 mscorsvw.exe           2008    720      3       48      0      0 2019-02-27 13:30:43 UTC+0000                                 
+0x82312b28 vmtoolsd.exe            252    720      8      310      0      0 2019-02-27 13:30:43 UTC+0000                                 
+0x81e37618 wmiprvse.exe            656    912      7      168      0      0 2019-02-27 13:30:52 UTC+0000                                 
+0x81f03620 wuauclt.exe            1684   1136      7      172      0      0 2019-02-27 13:31:37 UTC+0000                                 
+0x82294910 svchost.exe             300    720      9      129      0      0 2019-02-27 13:32:14 UTC+0000                                 
+0x8222a650 alg.exe                1692    720      7      103      0      0 2019-02-27 13:32:15 UTC+0000                                 
+0x8227c6d0 WINWORD.EXE            1420   1760      4      206      0      0 2019-02-27 13:33:27 UTC+0000                                 
+0x822f0b28 RamCapture.exe         1464   1760      2       40      0      0 2019-02-27 13:33:43 UTC+0000                         
+
+>> volatility -f '/root/Downloads/Infosec-career/20190227.mem' --profile=WinXPSP2x86 sockscan (открытые сетевые подключения)
+https://digital-forensics.sans.org/media/volatility-memory-forensics-cheat-sheet.pdf (netscan не работает на winxp)
+
+Offset(P)       PID   Port  Proto Protocol        Address         Create Time
+---------- -------- ------ ------ --------------- --------------- -----------
+0x020409f8      964    135      6 TCP             0.0.0.0         2019-02-27 13:30:23 UTC+0000
+0x020f8e98      732      0    255 Reserved        0.0.0.0         2019-02-27 13:30:44 UTC+0000
+0x020fc068      732   4500     17 UDP             0.0.0.0         2019-02-27 13:30:44 UTC+0000
+0x021992b0        4    139      6 TCP             192.168.109.134 2019-02-27 13:30:28 UTC+0000
+0x021a24f8     1220   1025     17 UDP             0.0.0.0         2019-02-27 13:30:52 UTC+0000
+0x021a5688     1136    123     17 UDP             127.0.0.1       2019-02-27 13:30:52 UTC+0000
+0x021b5460        4    445      6 TCP             0.0.0.0         2019-02-27 13:30:16 UTC+0000
+0x021cb8f0        4    137     17 UDP             192.168.109.134 2019-02-27 13:30:28 UTC+0000
+0x021f1258     1388   1900     17 UDP             192.168.109.134 2019-02-27 13:32:15 UTC+0000
+0x022605c8     1388   1900     17 UDP             127.0.0.1       2019-02-27 13:32:15 UTC+0000
+0x022712a8        4    138     17 UDP             192.168.109.134 2019-02-27 13:30:28 UTC+0000
+0x0238a798     1136    123     17 UDP             192.168.109.134 2019-02-27 13:30:52 UTC+0000
+0x0241f8c0        4    445     17 UDP             0.0.0.0         2019-02-27 13:30:16 UTC+0000
+0x0242c798     1692   1026      6 TCP             127.0.0.1       2019-02-27 13:32:15 UTC+0000
+0x02472740      732    500     17 UDP             0.0.0.0         2019-02-27 13:30:43 UTC+0000
+
+>> volatility -f '/root/Downloads/Infosec-career/20190227.mem' --profile=WinXPSP2x86 filescan | grep ".doc" (сканим память на наличие доковских файлов)
+Volatility Foundation Volatility Framework 2.6
+0x000000000204d588      1      0 RW-rw- \Device\HarddiskVolume1耈ocuments and Settings\XP SP2\Application Data\Microsoft\Office\Последние файлы\Секретно.doc.LNK
+0x0000000002112660      1      0 RW---- \Device\HarddiskVolume1\Documents and Settings\XP SP2\Рабочий стол\Секретно.doc
+0x000000000211c488      1      0 R--rwd \Device\HarddiskVolume1\WINDOWS\system32\shdocvw.dll
+0x000000000212c778      1      0 R--rwd \Device\HarddiskVolume1\WINDOWS\system32\shdocvw.dll
+0x00000000021b34b0      1      0 R--rwd \Device\HarddiskVolume1\WINDOWS\system32\mydocs.dll
+0x00000000021ec7a8      1      0 R--r-d \Device\HarddiskVolume1\WINDOWS\system32\shdoclc.dll
+0x00000000022643d8      1      0 RW-rw- \Device\HarddiskVolume1\Documents and Settings\XP SP2\Recent\Секретно.doc.lnk
+0x0000000002268d18      1      0 -W---- \Device\HarddiskVolume1㟰ocuments and Settings\XP SP2\Рабочий стол\~$кретно.doc
+0x000000000230d300      1      0 R--rw- \Device\HarddiskVolume1ైINDOWS\system32\mydocs.dll
+0x00000000024f7638      1      1 RW-rw- \Device\HarddiskVolume1\Documents and Settings\XP SP2\Рабочий стол\Секретно.doc
+0x0000000002508410      1      0 R--r-d \Device\HarddiskVolume1\WINDOWS\system32\shdoclc.dll
+
+(это ошибочная команда, не помогла, но пусть будет) >> volatility -f '/root/Downloads/Infosec-career/20190227.mem' --profile=WinXPSP2x86 memdump -p 1420 --dump-dir=/root/Downloads/Infosec-career/
+
+(можно так) >> volatility -f '/root/Downloads/Infosec-career/20190227.mem' --profile=WinXPSP2x86 dumpfiles -r doc$ -i --name --dump-dir=/root/Downloads/Infosec-career/ -u
+DataSectionObject 0x822f7638   1420   \Device\HarddiskVolume1\Documents and Settings\XP SP2\Рабочий стол\Секретно.doc
+
+(но так проще оказалось, как я потом выяснил) >> volatility -f '/root/Downloads/Infosec-career/20190227.mem' --profile=WinXPSP2x86 dumpfiles --dump-dir=/root/Downloads/dumpdoc/ -Q 0x0000000002112660
+
+>> Окрываем файл в вордовском файле "Мои поздравления, Вы справились!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
