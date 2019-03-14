@@ -1,0 +1,66 @@
+
+Задание 9
+
+========================
+Вариант первый (застрял)
+========================
+
+Создал текстовый документ с результатом команды в задании
+
+	>> xxd -r flag.txt > flag1.txt
+
+H4sIAORDfVwAAyv1NfQyCwg2tFQNMfQKcPFz9vNQ9cv3dTepCnFxUw3KrnAKqiow9+ECAF/KMlgoAAAA
+
+	>> echo 'H4sIAORDfVwAAyv1NfQyCwg2tFQNMfQKcPFz9vNQ9cv3dTepCnFxUw3KrnAKqiow9+ECAF/KMlgoAAAA' | base64 -d | gzip -cf > flag3.txt
+
+\8B\00悊\\00<\00\C3\FF\8B\00\E4C}\\00+\F55\F426\B4T
+1\F4
+p\F1s\F6\F3P\F5\CB\F7u7\A9
+qqS
+ʮp
+\AA*0\F7\E1\00_\CA2X(\00\00\00Iy\EA\80<\00\00\00\8B\00悊\\00<\00\C3\FF\8B\00\E4C}\\00+\F55\F426\B4T
+1\F4
+p\F1s\F6\F3P\F5\CB\F7u7\A9
+qqS
+ʮp
+
+	>> tr " " "%" (от результата предыдущей команды)
+\AA*0\F7\E1\00_\CA2X(\00\00\00Iy\EA\80<\00\00\00
+
+
+=============================
+Вариант второй (тоже застрял)
+=============================
+
+	>> xxd -r flag.txt > flag1.txt
+
+H4sIAORDfVwAAyv1NfQyCwg2tFQNMfQKcPFz9vNQ9cv3dTepCnFxUw3KrnAKqiow9+ECAF/KMlgoAAA
+
+	>> echo 'H4sIAORDfVwAAyv1NfQyCwg2tFQNMfQKcPFz9vNQ9cv3dTepCnFxUw3KrnAKqiow9+ECAF/KMlgoAAAA' | base64 -d | gzip -cf > flag3.txt
+
+\8B\00\BD\86\8A\\00<\00\C3\FF\8B\00\E4C}\\00+\F55\F426\B4T
+1\F4
+p\F1s\F6\F3P\F5\CB\F7u7\A9
+qqS
+ʮp
+\AA*0\F7\E1\00_\CA2X(\00\00\00Iy\EA\80<\00\00\00\8B\00\BD\86\8A\\00<\00\C3\FF\8B\00\E4C}\\00+\F55\F426\B4T
+1\F4
+p\F1s\F6\F3P\F5\CB\F7u7\A9
+qqS
+ʮp
+
+\AA*0\F7\E1\00_\CA2X(\00\00\00Iy\EA\80<\00\00\00
+
+===============================================================
+Вариант третий (получилась такая строка. глупо, но попробовать стоило)
+===============================================================
+
+	>> xxd -E flag.txt | base64 -w 0 | gzip -cf | tr " " "%" | awk '{split($0,a,"#"); print a[4],a[2],a[3],a[1]}'| sed -r 's/(.{9})/\1#/g' | base64 -w 0
+IB5yOvN0f8F9mHNXe+Tx5/88LsxDex54J1tSjwLuwIyM44HrJd3CA+97dD0iHiBjWSwj6uRZIsc6UlMvlcX+xvSROn2Qls7UN9iJQhnPXXWeseoDxpxb6uO85NESD9+jDnQb7H/J3VAuxqNqiIe8Mw9lwTgd9sxjfLvJklGHqP4Hc1vx+L7gcbpPPBxP5w3WIZ6COqb+2i+9c23M9FG//BReH8gY9pOH2UOp4xHoXWrihm9E7jEeyvmFfCXmPZp74xn3iD5OD54fY48sMfbca+au0Rtz7rYqtvC4+PmxZx/cHA/mGegQ+wbdvE6Mx1WP8wPXSi3YwxYGnj8Pzz3BXqSu9hf3CI+ydzySl4ztImev3cg9xqMpHY/Z3B+5yyLkzjoErcxGHqTf46Q5JDyeOfBMUsydeQTc8f8hqo/Ssj4UTuRwpinkrhZ1Su8rnjNRHjXzcB4W6/kTcK9y9IvLyY8Nfhlk4/3i9vfqTDNnW4zv//EPiyT2P7wHAAAgH4sIALSEilwAA42VwY6bMBCGXymBNOqlBwKo8rZjhEIOzjUHgrOrvbQC++k748GsgaTmMFIY2R77m/+fQJH1wHEUBfRgsxbDQo6B31MuKQ3lZAEHzFmwdQsav03W/u4Of1fRfvpzByg+W9ohcX/VCDpzB7bEXJ3ILjNYZ4854860NdfRkIg8W5+LkWt/Z9FXHa5tcC3+BnvD/TdXB2Z1brY6uzop5hK8SyvyJ3fuDr/A87COx4BvpHeaK+6/Nm/vonh7h49LKxNY5TAoF/D4lj3hsQo=
+
+	>> xxd -r flag.txt | base64 -w 0 | gzip -cf | tr " " "%" | awk '{split($0,a,"#"); print a[4],a[2],a[3],a[1]}'| sed -r 's/(.{9})/\1#/g' | base64 -w 0 > flag1.txt
+IOoXMmS3kTQ+iQ6rjD7VJJaTVADLt4x4RFThPvgwoE2RYs+ucV8gquatXdkVxzmzbpcpfejiHbCXsD5aO/22udDSoHr+AQ+6o9JsAAAAIB+LCAD/hYpcAAMFwb0OgyUQAOBXshibdOhCBBd/yskhYdTrJQcOxrTVp+/3jTVcCg==
+
+
+------------------------------------
+Понял, что нужно детальнее изучить каждую программу tr, awk, sed и ее параметры. Интересная задачка, спасибо!
